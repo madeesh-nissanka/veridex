@@ -1,0 +1,29 @@
+[1] Wilkinson, M.D. et al. (2016). The FAIR Guiding Principles for scientific data management and stewardship. Sci. Data. doi:10.1038/sdata.2016.18
+
+[2] Harris, C.R. et al. (2020). Array programming with NumPy. Nature. doi:10.1038/s41586-020-2649-2
+
+[3] Virtanen, P. et al. (2020). SciPy 1.0: fundamental algorithms for scientific computing in Python. Nat. Methods. doi:10.1038/s41592-019-0686-2
+
+[4] LeCun, Y., Bengio, Y. and Hinton, G. (2015). Deep learning. Nature. doi:10.1038/nature14539
+
+[5] Arksey, H. and O'Malley, L. (2005). Scoping studies: towards a methodological framework. Int. J. Soc. Res. Methodol. doi:10.1080/1364557032000119616
+
+[6] Page, M.J. et al. (2021). The PRISMA 2020 statement: an updated guideline for reporting systematic reviews. BMJ. doi:10.1136/bmj.n71
+
+[7] Tricco, A.C. et al. (2018). PRISMA Extension for Scoping Reviews (PRISMA-ScR): checklist and explanation. Ann. Intern. Med. doi:10.7326/M18-0850
+
+[8] Wickham, H. (2014). Tidy data. J. Stat. Softw. doi:10.18637/jss.v059.i10
+
+[9] Boettiger, C. (2015). An introduction to Docker for reproducible research. ACM SIGOPS Oper. Syst. Rev. doi:10.1145/2723872.2723882
+
+[10] Wilkinson, M.D. et al. (2019). The FAIR Guiding Principles for scientific data management and stewardship. Sci. Data. doi:10.1038/sdata.2016.18
+
+[11] Wilkson, M.D. et al. (2016). The FAIR Guiding Principles for scientific data management and stewardship. Sci. Data. doi:10.1038/sdata.2016.18
+
+[12] Doe, J. et al. (2020). A reference with an invented identifier. Example Journal. doi:10.1234/fake.2020.999
+
+[13] Higgins, J.P.T. et al. (2019). Cochrane Handbook for Systematic Reviews of Interventions. Wiley.
+
+[14] Smith, J. et al. (2023). A paper that does not exist. Example Conference Proceedings.
+
+[15] 10.1038/nature14539
