@@ -1,5 +1,7 @@
 # VERIDEX: Reference Validation and Provenance Auditing
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23274732.svg)](https://doi.org/10.5281/zenodo.23274732)
+
 VERIDEX validates a reference list (plain text, BibTeX, or RIS) or a list of DOIs against Crossref and OpenAlex, keeping a verification ledger for re-run auditing. It is designed for use by LLM agents and researchers preparing manuscripts.
 
 ## Abstract

@@ -7,6 +7,7 @@ authors:
   - family-names: Nissanka
     given-names: Madeesh P.
     affiliation: "Université Laval"
+doi: 10.5281/zenodo.23274732
 license: MIT
 repository-code: "https://github.com/madeesh-nissanka/veridex"
 version: 0.1.2
