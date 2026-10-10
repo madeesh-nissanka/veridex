@@ -9,8 +9,8 @@ authors:
     affiliation: "Université Laval"
 license: MIT
 repository-code: "https://github.com/madeesh-nissanka/veridex"
-version: 0.1.1
-date-released: 2026-10-09
+version: 0.1.2
+date-released: 2026-10-10
 keywords:
   - reference-validation
   - crossref
