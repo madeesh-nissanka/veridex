@@ -6,6 +6,7 @@ abstract: "A command-line tool that validates a reference list (plain text, BibT
 authors:
   - family-names: Nissanka
     given-names: Madeesh P.
+    affiliation: "Université Laval"
 license: MIT
 repository-code: "https://github.com/madeesh-nissanka/veridex"
 version: 0.1.1
