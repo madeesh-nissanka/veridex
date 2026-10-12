@@ -1,0 +1,32 @@
+# VERIDEX v0.2.0 - reference validation and provenance auditing.
+# Copyright (c) 2026 Madeesh P. Nissanka
+# MIT License - see LICENSE file.
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Tests
+        run: pytest -q
+      - name: Example audit
+        continue-on-error: true
+        run: veridex audit examples/refs.bib --policy examples/policy.yaml
+      - name: SARIF audit
+        continue-on-error: true
+        run: veridex audit examples/refs.bib --out sarif_out --format sarif
+      - name: Upload SARIF to GitHub code scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: sarif_out/report.sarif
+          category: veridex-reference-audit

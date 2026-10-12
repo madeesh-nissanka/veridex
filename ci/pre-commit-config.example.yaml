@@ -1,0 +1,13 @@
+# VERIDEX v0.2.0 - reference validation and provenance auditing.
+# Copyright (c) 2026 Madeesh P. Nissanka
+# MIT License - see LICENSE file.
+# Copy to .pre-commit-config.yaml in a project that cites references.
+repos:
+  - repo: local
+    hooks:
+      - id: veridex-audit
+        name: veridex audit
+        entry: veridex audit
+        language: system
+        files: \.(bib|ris|txt)$
+        args: ["--policy", "examples/policy.yaml", "--format", "text"]

@@ -1,20 +1,29 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
-type: software
-title: "VERIDEX: Reference Validation and Provenance Auditing against Crossref and OpenAlex"
-abstract: "A command-line tool that validates a reference list (plain text, BibTeX, or RIS) or a list of DOIs against Crossref and OpenAlex, keeping a verification ledger for re-run auditing. Designed for use by LLM agents and researchers preparing manuscripts."
+message: "If you use VERIDEX, please cite it as below."
 authors:
   - family-names: Nissanka
     given-names: Madeesh P.
     affiliation: "Université Laval"
+title: "VERIDEX: Reference validation and provenance auditing"
+version: 0.3.0
+date-released: 2026-10-12
 doi: 10.5281/zenodo.23274732
-license: MIT
 repository-code: "https://github.com/madeesh-nissanka/veridex"
-version: 0.1.2
-date-released: 2026-10-10
+url: "https://github.com/madeesh-nissanka/veridex"
+license: MIT
 keywords:
-  - reference-validation
-  - crossref
-  - openalex
+  - references
   - bibliography
   - provenance
+  - retraction
+  - citation
+  - validation
+  - crossref
+  - openalex
+  - datacite
+  - pubmed
+  - europepmc
+  - semantic scholar
+  - arxiv
+  - openlibrary
+  - doaj

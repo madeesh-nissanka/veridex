@@ -1,0 +1,5 @@
+# VERIDEX v0.2.0 - reference validation and provenance auditing.
+# Copyright (c) 2026 Madeesh P. Nissanka
+# MIT License - see LICENSE file.
+[1] Soil consolidation settlement under staged embankment loading. Journal of Geotechnical Practice, 2018. doi:10.1000/example.2018.001
+[2] Beam deflection limits for long-span timber floors. Structural Notes, 2019.

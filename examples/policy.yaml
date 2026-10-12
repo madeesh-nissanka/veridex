@@ -1,0 +1,16 @@
+# VERIDEX v0.2.0 - reference validation and provenance auditing.
+# Copyright (c) 2026 Madeesh P. Nissanka
+# MIT License - see LICENSE file.
+# Example audit policy for VERIDEX.
+fail_on:
+  - RETRACTED
+  - DOI_NOT_FOUND
+max_fabrication_score: 0.35
+max_weak_context_ratio: 0.5
+min_verified_ratio: 0.5
+required_fields:
+  - title
+  - year
+allowed_venues: []
+blocked_venues:
+  - Predatory Reports Quarterly

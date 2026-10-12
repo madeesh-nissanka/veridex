@@ -1,63 +1,90 @@
----
-name: veridex
-description: Validate a reference list or DOIs against Crossref and OpenAlex, keeping a verification ledger for re-run auditing.
----
+# VERIDEX v0.2.0 - reference validation and provenance auditing.
+# Copyright (c) 2026 Madeesh P. Nissanka
+# MIT License - see LICENSE file.
+# VERIDEX agent skill
 
-# VERIDEX: Reference Validation and Provenance Auditing
-
-VERIDEX takes a reference list (plain text one-per-line, BibTeX .bib, or RIS .ris) or a list of DOIs and checks every entry against Crossref (primary) and OpenAlex (second opinion). It keeps a verification ledger so that re-runs show what changed.
+VERIDEX audits reference lists against public scholarly sources and records a
+tamper-evident provenance ledger. The core is stdlib-only; network use happens
+only through the resolver adapters.
 
 ## When to use
-- Before submitting a manuscript to verify all references.
-- Auditing a bibliography for mismatches, retractions, or missing DOIs.
-- You need an auditable trail of every verification decision.
 
-## Workflow
-1. Run VERIDEX on your reference list before submission.
-2. Treat MISMATCH and NO_DOI_UNMATCHED as your decision: never silently fix.
-3. Never "correct" a reference from memory; use the Crossref metadata shown in the audit.
-4. Note the Crossref author-order trap: order sometimes differs from the printed paper; the printed paper wins. Check the PDF where one exists.
+- Validate a bibliography (`.bib`, `.ris`, `.txt`, CSL JSON, EndNote XML, DOCX).
+- Detect fabricated, mis-cited, duplicate, retracted or corrupted references.
+- Produce a provenance ledger and verify it later.
+- Enforce a policy (exit code 1 on violation).
 
-## Command-line interface
-```bash
-python3 scripts/veridex.py references.txt --out audit/ [--format auto|text|bib|ris|dois] [--ledger audit/ledger.jsonl]
+## Subcommands
+
+| Command | Purpose |
+| --- | --- |
+| `parse FILE` | Parse references only (no network). |
+| `resolve FILE` | Resolve then audit references. |
+| `lookup IDS_FILE` | Batch identifier lookup (DOI/URL/PMID/arXiv/ISBN per line); compact matched metadata, `--json` supported. |
+| `audit FILE` | Parse + resolve + evaluate + optional policy/ledger. |
+| `repair FILE [--out DIR]` | Suggest corrected fields; `--out` writes repaired.bib/.ris/.csl.json + repair_log.json (never overwrites). |
+| `report FILE --out DIR` | Audit and write a report. |
+| `dashboard FILE --out DIR` | Audit and write a self-contained offline HTML review dashboard (filter/sort, accept/reject, notes, JSON/CSV export). |
+| `verify-ledger PATH` | Verify the hash chain. |
+| `diff LEDGER RUN_A RUN_B` | Diff two runs by request URL. |
+| `policy PATH` | Validate a policy file. |
+| `about` | Print name/version/license/copyright. |
+
+## Global flags
+
+`--version`, `--json`, `--quiet`, `--verbose`, `--policy PATH`,
+`--sources a,b` (prefix a source with `no-` to disable, e.g. `no-arxiv`),
+`--cache-dir DIR`, `--no-cache`, `--workers N`, `--out DIR`, `--ledger PATH`,
+`--format FMT`, `--legacy-status`, `--manuscript PATH`, `--retraction-file PATH`.
+
+## Exit codes
+
+- `0` clean
+- `1` policy violation
+- `2` usage error
+- `3` internal error
+- `4` ledger tamper
+
+## JSON output
+
+`--json` writes a single object to stdout. `audit` returns:
+
+```json
+{
+  "tool": "veridex",
+  "version": "0.2.0",
+  "summary": {"VERIFIED": 2, "NOT_FOUND": 1},
+  "violations": [],
+  "results": [
+    {"index": 0, "status": "VERIFIED", "flags": [], "scores": {}}
+  ]
+}
 ```
 
-## Input formats
-- **text**: One reference per line, e.g. "[3] Wilkinson, M.D. et al. (2016). Title. Journal. doi:10.1038/sdata.2016.18"
-- **bib**: BibTeX .bib file
-- **ris**: RIS .ris file
-- **dois**: One DOI per line
-- **auto**: Detect from file extension (.bib, .ris) or content
+`verify-ledger` returns `{"ok": true, "problems": []}`.
 
-## Per-entry statuses
-- VERIFIED: DOI resolves, title similarity >= 0.90, first-author surname present, year within 1.
-- VERIFIED_WITH_WARNINGS: author_order_differs, year_off_by_one, doi_case_or_formatting_fixed.
-- MISMATCH: DOI resolves but title < 0.90 or first author absent or year off by >1 (exact field listed).
-- DOI_NOT_FOUND: Crossref 404.
-- NO_DOI_MATCHED: Found via bibliographic search.
-- NO_DOI_UNMATCHED: Cannot be verified; reported honestly, not guessed.
-- RETRACTED: Crossref update-to retraction/withdrawal.
-- UNREACHABLE: Crossref unreachable after backoff.
+## Examples
 
-## Outputs
-- `audit.csv`: Full verification table.
-- `audit.md`: Human-readable table with corrected fields shown next to original for MISMATCH entries.
-- `verified.bib`: BibTeX of VERIFIED and VERIFIED_WITH_WARNINGS entries (keys: firstauthorYEARfirstwordoftitle).
-- `ledger.jsonl`: One JSON line per lookup: timestamp, entry index, request URL, HTTP status, response SHA256, status, flags.
-- `summary.json`: Counts per status.
+```
+veridex about --json
+veridex parse examples/refs.bib --json
+veridex audit examples/refs.bib --policy examples/policy.yaml
+veridex audit examples/refs.bib --out audit --format json --ledger run.jsonl
+veridex verify-ledger run.jsonl
+veridex refs.txt --out audit --format text   # v0.1 compatible
+```
 
-## Ledger and re-runs
-On a re-run, the ledger is compared and a "changes since last audit" section is printed (NEW, UNCHANGED, CHANGED with old and new status).
+## Programmatic use
 
-## Design decisions
-- Google Scholar is not used (no API, scraping breaks terms). Crossref and OpenAlex only.
-- Crossref query.bibliographic returns items with a score; match only if title similarity >= 0.90 AND year within 1.
-- DOI regex: `10.\d{4,9}/[-._;()/:A-Za-z0-9]+`, strip trailing punctuation and period.
-- User-Agent includes SCHOLAR_MAILTO when set.
+```python
+from veridex import api
 
-## Limitations
-- Crossref bibliographic search may return false positives; the 0.90/year threshold reduces this.
-- Author order in Crossref may differ from the printed paper; flagged as warning only.
-- Paywalled records cannot be fully verified beyond metadata.
-- RIS parsing is minimal; complex RIS files may need pre-processing.
+results = api.audit_references("examples/refs.bib", ledger_path="run.jsonl")
+for r in results:
+    print(r.index, r.status)
+
+report = api.verify_ledger("run.jsonl")
+```
+
+Set `api.TRANSPORT` to a `callable(url, timeout) -> Response` in tests to keep
+everything offline.
