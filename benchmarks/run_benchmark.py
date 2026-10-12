@@ -87,7 +87,7 @@ _TITLES = [
     "Consolidation of peat soils",
     "Settlement of embankments on soft ground",
     "Vibration isolation in foundations",
-    "Liquefaction potential of saturated sands",
+    "Wind loading on tall slender structures",
     "Soil compaction and relative density effects",
     "Shear modulus degradation in cyclic triaxial tests",
     "Frost heave in seasonally frozen ground",

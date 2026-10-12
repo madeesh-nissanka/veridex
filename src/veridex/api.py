@@ -550,6 +550,9 @@ def write_report(
     Uses the reports module when available and otherwise falls back to a plain
     JSON dump so the CLI never depends on another unit being finished.
     """
+    if fmt.lower() == "all":
+        written = [write_report(results, out_dir, f, meta) for f in ("json", "md", "html", "csv", "sarif")]
+        return written[0]
     directory = Path(out_dir)
     directory.mkdir(parents=True, exist_ok=True)
     extension = _EXT.get(fmt.lower(), "md")

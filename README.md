@@ -19,7 +19,7 @@
 - **Measured accuracy**: an offline labelled benchmark with real precision/recall/F1 per signal reported in [docs/benchmark.md](docs/benchmark.md)
 - **Policy file** (YAML/JSON): thresholds, required-fields rules, allowed/blocked venues, fail-on conditions for CI; exit codes
 - **Agent-friendliness**: subcommands (`parse`, `resolve`, `lookup`, `audit`, `repair`, `report`, `dashboard`, `verify-ledger`, `diff`, `policy`, `about`), `--json` output, Python API, SKILL.md for LLM agents, pre-commit hook config, GitHub Action example
-- **Engineering**: src layout, pyproject.toml, type hints, logging, concurrency with polite rate limits, deterministic output, 471 offline unit tests, CI workflow
+- **Engineering**: src layout, pyproject.toml, type hints, logging, concurrency with polite rate limits, deterministic output, 474 offline unit tests, CI workflow
 
 ## Installation
 

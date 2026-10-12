@@ -18,6 +18,11 @@ All notable changes to VERIDEX are documented here.
 - **Batch identifier lookup subcommand** (`veridex lookup ids.txt`): resolve DOI/URL/PMID/arXiv/ISBN lines without full audit; JSON/text output
 - **User config file** (`veridex.yaml`, `.veridexrc`, `.veridexrc.json`): defaults for sources, workers, cache_dir, etc.; parent directory walk; CLI args take precedence
 
+### Fixed
+- `--format all` now writes JSON, Markdown, HTML, CSV and SARIF reports (it was rejected as an unsupported format).
+- A reference field missing on one side (journal, volume, pages) is no longer reported as a mismatch; only values present on both sides that differ are flagged. Correct references without a journal in the input now come back `VERIFIED` instead of `VERIFIED_WITH_WARNINGS`.
+- Regression tests added for both, found by running the real CLI against live Crossref/OpenAlex data.
+
 ## [0.2.0] - 2026-10-11
 
 ### Added

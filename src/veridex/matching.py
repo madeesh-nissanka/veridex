@@ -155,20 +155,15 @@ def compare_fields(ref: ParsedReference, rec: ResolvedRecord) -> dict[str, bool 
             overlap = len(rv_tokens & rr_tokens) / len(rv_tokens | rr_tokens)
             if overlap < 0.5:
                 flags["venue_mismatch"] = True
-    elif ref_venue or rec_venue:
-        flags["venue_mismatch"] = True
+    # A field missing on one side is unknown, not a mismatch.
 
     if ref.volume and rec.volume:
         if ref.volume != rec.volume:
             flags["volume_mismatch"] = True
-    elif ref.volume or rec.volume:
-        flags["volume_mismatch"] = True
 
     if ref.pages and rec.pages:
         if ref.pages != rec.pages:
             flags["pages_mismatch"] = True
-    elif ref.pages or rec.pages:
-        flags["pages_mismatch"] = True
 
     return flags
 
