@@ -269,4 +269,6 @@ Copyright (c) 2026 Madeesh P. Nissanka
 
 ## Citation
 
-See [CITATION.cff](CITATION.cff).
+See [CITATION.cff](CITATION.cff). The DOI
+[10.5281/zenodo.23274732](https://doi.org/10.5281/zenodo.23274732) always resolves to
+the latest archived version.
